@@ -1,14 +1,11 @@
-import math
 import os
-from typing import List
-
-import keyboard
+import math
 import time
+import keyboard
 from threading import Thread
 
-MapUrl = "map.txt"
-Map = []
-endGame = False
+
+
 
 PositionX = 0
 PositionY = 0
@@ -20,12 +17,23 @@ RotationAngle = 1.5 * math.pi / 180
 RenderRayStepLength = 0.015
 FieldOfVision = math.pi / 2
 RangeOfVision = 8
-ScreenWidth = 200
-ScreenHeight = 60
+ScreenWidth = 130
+ScreenHeight = 40
+
+MinKeyReadDelay = 0.05
+MinRenderAndPrintDelay = 0.05
 
 BlockHeight = 1
 BlockSymbols = [ '█', '▓', '▒', '░' ]
 FloorSymbols = [ 'x', '=', '~', '-', '.' ]
+
+
+
+
+MapUrl = "map.txt"
+Map = []
+endGame = False
+
 
 
 
@@ -38,6 +46,7 @@ class ReadKeysThread(Thread):
         while not endGame:
             ReadKeys()
             time.sleep(self.Delay)
+
 
 class RenderThread(Thread):
     def __init__(self, delay):
@@ -57,15 +66,19 @@ class RenderThread(Thread):
             time.sleep(self.Delay)
 
 
+
+
 def Start():
+    global MinKeyReadDelay
+    global MinRenderAndPrintDelay
+
     ReadMap(MapUrl)
 
-    readKeysThread = ReadKeysThread(0.05)
-    renderThread = RenderThread(0.05)
+    readKeysThread = ReadKeysThread(MinKeyReadDelay)
+    renderThread = RenderThread(MinRenderAndPrintDelay)
 
     readKeysThread.start()
     renderThread.start()
-
 
 
 
@@ -88,6 +101,12 @@ def ReadMap(url):
         Map.append(column)
     if PositionX == 0 and PositionY == 0:
         raise Exception("Missed '@' sign in map")
+
+
+
+
+
+
 
 
 
@@ -145,6 +164,12 @@ def ReadKeys():
         MakeStep("a")
     elif keyboard.is_pressed("d"):
         MakeStep("d")
+
+
+
+
+
+
 
 
 
@@ -253,6 +278,12 @@ def Render(PositionX, PositionY, DirectionAngle, FieldOfVision, RangeOfVision):
 
 
 
+
+
+
+
+
+
 def PrintScreen(screen):
     def clear():
         if os.name == 'nt':
@@ -272,6 +303,7 @@ def PrintScreen(screen):
 
     clear()
     print(screenString)
+
 
 
 
