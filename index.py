@@ -15,15 +15,15 @@ StepLength = 0.05
 RotationAngle = 1.5 * math.pi / 180
 
 RenderRayStepLength = 0.015
-FieldOfVision = math.pi / 2
+FieldOfVision = math.pi / 3
 RangeOfVision = 8
-ScreenWidth = 130
-ScreenHeight = 40
+ScreenWidth = 280
+ScreenHeight = 80
 
 MinKeyReadDelay = 0.05
 MinRenderAndPrintDelay = 0.05
 
-BlockHeight = 1
+BlockHeight = 0.5
 BlockSymbols = [ '█', '▓', '▒', '░' ]
 FloorSymbols = [ 'x', '=', '~', '-', '.' ]
 
@@ -120,7 +120,6 @@ def ReadKeys():
     global DirectionAngle
     global RotationAngle
 
-
     if keyboard.is_pressed("esc"):
         endGame = True
         return
@@ -155,14 +154,14 @@ def ReadKeys():
             PositionX += xShift
             PositionY += yShift
 
-    if keyboard.is_pressed("w"):
+    if keyboard.is_pressed(13):
         MakeStep("w")
-    elif keyboard.is_pressed("s"):
+    elif keyboard.is_pressed(1):
         MakeStep("s")
 
-    if keyboard.is_pressed("a"):
+    if keyboard.is_pressed(0):
         MakeStep("a")
-    elif keyboard.is_pressed("d"):
+    elif keyboard.is_pressed(2):
         MakeStep("d")
 
 
